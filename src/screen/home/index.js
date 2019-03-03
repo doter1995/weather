@@ -28,7 +28,6 @@ export default class App extends React.Component {
           .catch(e => console.log(e));
       },
       error => {
-        console.log(error);
         this.setState({ city: { ...this.state.city, name: "定位失败" } });
       },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -36,7 +35,6 @@ export default class App extends React.Component {
   }
   getWeatherData(cityCode) {
     getWeather(cityCode).then(data => {
-      console.log(data);
       this.setState({ weatherData: data });
     });
   }

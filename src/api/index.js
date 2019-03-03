@@ -2,7 +2,6 @@ import key from "./Key";
 import City from "./city";
 
 export const getWeather = (cityId = 101110101, version = 1) => {
-  console.log(cityId, version);
   return new Promise((resolve, reject) => {
     fetch(`https://www.tianqiapi.com/api/?version=v${version}&cityid=${cityId}`)
       .then(data => data.json())
@@ -23,9 +22,7 @@ export const getCity = position => {
     fetch(url)
       .then(data => data.json())
       .then(data => {
-        console.log(data);
         if (data.status === "1") {
-          console.log("return");
           return data;
         } else {
           reject();

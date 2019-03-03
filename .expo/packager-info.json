@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 98366,
-  "expoServerNgrokUrl": "https://d8-i8u.anonymous.weather.exp.direct",
-  "packagerNgrokUrl": "https://packager.d8-i8u.anonymous.weather.exp.direct",
-  "ngrokPid": 98386
+  "devToolsPort": 19004,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://7y-nsa.doter.weather.exp.direct",
+  "packagerNgrokUrl": "https://packager.7y-nsa.doter.weather.exp.direct",
+  "ngrokPid": 4447
 }

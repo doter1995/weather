@@ -9,7 +9,8 @@ const MainNavigator = createDrawerNavigator(
     Profile: { screen: ProfileScreen }
   },
   {
-    contentComponent: NotificationsScreen
+    contentComponent: NotificationsScreen,
+    drawerPosition: "right"
   }
 );
 const App = createAppContainer(MainNavigator);
