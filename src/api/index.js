@@ -48,3 +48,22 @@ export const getCityName = regeocode => {
   const address = regeocode.addressComponent;
   return `${address.province}-${address.city}-${address.district}`;
 };
+
+export const getPosition = geolocation => {
+  return new Promise((resolve, reject) => {
+    geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+export const searchPlace = text => {
+  return new Promise((resolve, reject) => {
+    const results = City.filter(
+      data =>
+        data.cityZh.includes(text) ||
+        data.leaderZh.includes(text) ||
+        data.leaderEn.includes(text) ||
+        data.leaderEn.includes(text)
+    );
+    resolve(results);
+  });
+};

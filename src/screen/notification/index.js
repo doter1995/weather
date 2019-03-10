@@ -1,45 +1,24 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-
+import { StyleSheet, Text, View } from "react-native";
+import { Avatar, Button } from "react-native-elements";
 export default class index extends Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Image
-          source={require("./img/duotone.png")}
-          style={styles.backgroundImage}
+        <Avatar
+          rounded
+          size={100}
+          title="M"
+          containerStyle={{ marginTop: 60 }}
         />
-        <View style={styles.top} />
-        <View style={styles.middle}>
-          <View>
-            <Text
-              style={styles.button}
-              onPress={() => navigate("Home", { name: "Jane" })}
-            >
-              关于我
-            </Text>
-            <Text
-              style={styles.button}
-              onPress={() => navigate("Home", { name: "Jane" })}
-            >
-              反馈
-            </Text>
-            <Text
-              style={styles.button}
-              onPress={() => navigate("Home", { name: "Jane" })}
-            >
-              给个好评
-            </Text>
-            <Text
-              style={styles.button}
-              onPress={() => navigate("Home", { name: "Jane" })}
-            >
-              设置
-            </Text>
-          </View>
+        <Text style={{ marginTop: 10 }}>当前版本：0.0.1</Text>
+        <View style={styles.operations}>
+          <Button title="主题设置" type="outline" style={styles.operationsBt} />
+          <Button title="给个好评" type="outline" style={styles.operationsBt} />
+          <Button title="关于作者" type="outline" style={styles.operationsBt} />
+          <Button title="在线留言" type="outline" style={styles.operationsBt} />
         </View>
-        <View style={styles.bottom} />
       </View>
     );
   }
@@ -48,27 +27,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#6b52ae"
+    alignItems: "center"
   },
-  backgroundImage: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    zIndex: -1
+  operations: {
+    marginTop: 25,
+    flex: 1,
+    width: "90%"
   },
-  top: {
-    flex: 0.3
-  },
-  bottom: {
-    flex: 0.5
-  },
-  button: {
-    width: "100%",
-    fontSize: 24,
-    margin: 5,
-    backgroundColor: "rgba(9,9,9,0.4)"
-  },
-  middle: {
-    flex: 0.2
+  operationsBt: {
+    marginBottom: 10
   }
 });

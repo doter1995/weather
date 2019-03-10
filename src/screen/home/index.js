@@ -1,61 +1,51 @@
 import React from "react";
-import { StyleSheet, Text, Button, View } from "react-native";
-import { getCity, getCityCode, getCityName, getWeather } from "../../api";
+import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-navigation";
+
+import { AsyncStorage } from "react-native";
+import { Header, Button } from "react-native-elements";
+import { getWeather } from "../../api";
+import WeatherToday from "./weatherToday";
 export default class App extends React.Component {
   state = {
-    city: {
-      name: "正在定位中",
-      code: "1001"
-    },
+    cityName: "正在定位中",
+    cityCode: "1001",
     weatherData: []
   };
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        getCity(position)
-          .then(data => data.regeocode)
-          .then(regeocode => {
-            const city = this.state.city;
-            const cityCode = getCityCode(regeocode);
-            this.setState({
-              city: {
-                name: getCityName(regeocode),
-                code: cityCode
-              }
-            });
-            this.getWeatherData(cityCode);
-          })
-          .catch(e => console.log(e));
-      },
-      error => {
-        this.setState({ city: { ...this.state.city, name: "定位失败" } });
-      },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
-  }
-  getWeatherData(cityCode) {
-    getWeather(cityCode).then(data => {
-      this.setState({ weatherData: data });
-    });
-  }
+  componentDidMount = async () => {
+    const cityCode = await AsyncStorage.getItem("cityCode");
+    const cityName = await AsyncStorage.getItem("cityName");
+    this.setState({ cityCode, cityName });
+    const weatherData = await getWeather(cityCode);
+    this.setState({ weatherData: weatherData });
+  };
   render() {
     const { navigate } = this.props.navigation;
-    const { city, weatherData } = this.state;
+    const { cityName, weatherData } = this.state;
     return (
       <View style={styles.container}>
-        <Text>{city.name}</Text>
-        <Text>{city.code}</Text>
-        {weatherData.map(data => {
-          return (
-            <Text key={data.date}>
-              {data.wea}-{data.date}
-            </Text>
-          );
-        })}
-        <Button
-          title="Go to My profile"
-          onPress={() => navigate("Profile", { name: "Jane" })}
+        <Header
+          leftComponent={{
+            icon: "add",
+            color: "#fff",
+            onPress: () => navigate("Search", { name: "doter" })
+          }}
+          centerComponent={{
+            text: cityName,
+            style: { color: "#fff", fontSize: 20 }
+          }}
+          rightComponent={{
+            icon: "settings",
+            color: "#fff",
+            onPress: () => this.props.navigation.openDrawer()
+          }}
         />
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={styles.middle}>
+            <WeatherToday data={weatherData[0] || []} />
+          </View>
+          <View style={styles.bottom} />
+        </SafeAreaView>
       </View>
     );
   }
@@ -64,8 +54,18 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: "#E0E3DA"
+  },
+  header: {
+    height: 24,
+    alignItems: "center"
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#383A3F"
+  },
+  middle: {
+    flex: 1
   }
 });
