@@ -13,11 +13,28 @@ export default class App extends React.Component {
     weatherData: []
   };
   componentDidMount = async () => {
-    const cityCode = await AsyncStorage.getItem("cityCode");
-    const cityName = await AsyncStorage.getItem("cityName");
-    this.setState({ cityCode, cityName });
+    let cityCode, cityName;
+    const city = this.props.navigation.state.params;
+    if (city) {
+      cityCode = city.id;
+      cityName = city.cityZh;
+    } else {
+      cityCode = await AsyncStorage.getItem("cityCode");
+      cityName = await AsyncStorage.getItem("cityName");
+    }
     const weatherData = await getWeather(cityCode);
-    this.setState({ weatherData: weatherData });
+    this.setState({ cityCode, cityName, weatherData: weatherData });
+  };
+  componentWillReceiveProps = async newProps => {
+    const { id, cityZh } = newProps.navigation.state.params;
+    if (this.state.sityCode !== id) {
+      const weatherData = await getWeather(id);
+      this.setState({
+        cityCode: id,
+        cityName: cityZh,
+        weatherData: weatherData
+      });
+    }
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -26,9 +43,10 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <Header
           leftComponent={{
-            icon: "add",
+            icon: "bars",
+            type: "antdesign",
             color: "#fff",
-            onPress: () => navigate("Search", { name: "doter" })
+            onPress: () => navigate("CityList", { name: "doter" })
           }}
           centerComponent={{
             text: cityName,

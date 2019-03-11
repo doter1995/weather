@@ -7,12 +7,13 @@ import { AsyncStorage } from "react-native";
 export default class AppStrart extends React.Component {
   state = {
     isReady: false,
-    city: null,
+    cityData: null,
     name: ""
   };
   startAsync = async () => {
     const position = await getPosition(navigator.geolocation);
     const cityData = await getCity(position);
+    this.setState({ cityData });
     const cityCode = getCityCode(cityData.regeocode);
     await AsyncStorage.setItem("cityCode", cityCode);
     await AsyncStorage.setItem("cityName", getCityName(cityData.regeocode));
@@ -28,6 +29,6 @@ export default class AppStrart extends React.Component {
       );
     }
 
-    return <App />;
+    return <App cityData={this.state.cityData} />;
   }
 }
