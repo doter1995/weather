@@ -68,7 +68,6 @@ export default class App extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const { cityList } = this.state;
-    console.log("cityList", cityList);
     return (
       <View>
         <Header

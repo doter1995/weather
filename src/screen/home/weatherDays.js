@@ -7,6 +7,7 @@ export default class TempDays extends Component {
     if (!data) {
       data = [];
     }
+    data.shift();
     const dataSet = data.map(item => ({ data: [item] }));
     return (
       <SectionList
@@ -16,34 +17,26 @@ export default class TempDays extends Component {
           return (
             <View
               style={{
-                width: 200,
+                width: 400,
                 alignItems: "left"
               }}
             >
-              <Text style={{ fontSize: 14 }} key={index}>
+              <Text style={styles.text} key={index}>
                 {item.day}
               </Text>
-              <Text style={{ fontSize: 14 }} key={index}>
+              <Text style={styles.text} key={index}>
                 {item.tem2 == item.tem1
                   ? `当前：${item.tem1}`
                   : `${item.tem2}-${item.tem1}`}
               </Text>
-              <Text style={{ fontSize: 14 }} key={index}>
+              <Text style={styles.text} key={index}>
                 {item.win[0]}:{item.win_speed}
               </Text>
-              {item.air != undefined ? (
-                <View>
-                  <Text>空气质量-{item.air}</Text>
-                  <Text>{item.air_tips}</Text>
-                </View>
-              ) : (
-                <View />
-              )}
               {item.index.map((obj, key) => {
-                if (key == 1) return <View />;
+                if (key == 1 || key == 2) return <View />;
                 return (
                   <View>
-                    <Text style={{ fontSize: 14 }} key={key}>
+                    <Text style={styles.text} key={key}>
                       {obj.title}:{obj.level}
                     </Text>
                   </View>
@@ -62,5 +55,10 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     flexDirection: "row"
+  },
+  text: {
+    marginTop: 15,
+    marginBottom: 15,
+    fontSize: 18
   }
 });

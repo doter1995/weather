@@ -6,6 +6,7 @@ import { AsyncStorage } from "react-native";
 import { Header, Button } from "react-native-elements";
 import { getWeather } from "../../api";
 import WeatherToday from "./weatherToday";
+import WeatherDays from "./weatherDays";
 export default class App extends React.Component {
   state = {
     cityName: "正在定位中",
@@ -61,6 +62,7 @@ export default class App extends React.Component {
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.middle}>
             <WeatherToday data={weatherData[0] || []} />
+            <WeatherDays data={weatherData} />
           </View>
           <View style={styles.bottom} />
         </SafeAreaView>

@@ -11,7 +11,6 @@ export default class weatherToday extends Component {
   }
   render() {
     const { data } = this.props;
-    console.log(data);
     data.win = data.win || [];
     return (
       <ThemeProvider>
