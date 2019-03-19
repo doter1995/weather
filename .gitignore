@@ -3,3 +3,4 @@ node_modules/
 src/api/Key.js
 
 .expo/packager-info.json
+.idea/
